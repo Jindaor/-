@@ -1,0 +1,108 @@
+#define _CRT_SECURE_NO_WARNINGS  1
+#include <stdio.h>
+#include <stdlib.h>
+
+void pointer_init()
+{
+	char* p = "hello";//字符串常量地址赋值给p
+	char c[10] = "hello";//等价于strcpy(c,"hello")
+	c[0] = 'H';
+	//p[0]='H';只读不可写
+	printf("c[0]=%c\n", c[0]);
+	printf("p[0]=%c\n", p[0]);
+	p = "world";
+	//c = "world";
+	puts(p);
+}
+//函数执行结束以后，函数对应的栈空间就会释放
+void stack_string()
+{
+	char c[10] = "hello";
+	return c;
+}
+//堆空间在函数执行后不会释放
+char* heap_string()
+{
+	char* p = (char*)malloc(10);
+	strcpy(p, "hello");
+	return p;
+}
+
+void stack_heap()
+{
+	char* p;
+	p=heap_string();
+	printf("%s\n", p);
+}
+
+void wild_pointer()
+{
+	int* p1, * p2, * p3;
+	p1 = (int*)malloc(4);
+	*p1 = 1;
+	p2 = (int*)malloc(4);
+	*p2 = 2;
+	free(p1);
+	//p1 = NULL;
+	p3 = (int*)malloc(4);
+	*p3 = 3;
+	printf("*p3=%d\n", *p3);
+	*p1 = 100;
+	printf("*p3=%d\n", *p3);
+}
+
+void use_const()
+{
+	const char* p;//代表不能用P去改变所指向空间的内容
+	char str[] = "helloworld";
+	p = str;
+	str[0] = 'H';
+}
+
+void use_mem()
+{
+	int a[7] = { 1,2,3,4,5,6,7 };
+	memmove(a, a + 2, sizeof(int) * 5);
+}
+
+void mymemmove(void* from, void* to, size_t count)
+{
+	char* pFrom, * pTo;
+	if (from > to)
+	{
+		pFrom = (char*)from;
+		pTo = (char*)to;
+		while (count)
+		{
+			*pTo = *pFrom;
+			pFrom++;
+			pTo++;
+			count--;
+		}
+	}else if(from<to){
+		pFrom = (char*)from + count - 1;
+		pTo = (char*)to + count - 1;
+		while (count)
+		{
+			*pTo = *pFrom;
+			pFrom--;
+			pTo--;
+			count--;
+		}
+	}
+}
+
+int main()
+{
+	//野指针(free了一个指针，但是这个指针没有赋上NULL)
+	//wild_pointer();
+	//堆空间和栈空间的区别
+	//stack_heap();
+	//字符指针与字符数组的初始化
+	//pointer_init();
+	//const的使用
+	//use_const();
+	//memcpy与memmove的差异
+	use_mem();
+	return 0;
+}
