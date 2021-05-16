@@ -1,0 +1,39 @@
+#define _CRT_SECURE_NO_WARNINGS  1
+
+#include <stdio.h>
+#include <stdlib.h>
+
+void jolly()
+{
+	printf("For he's a jolly good fellow!\n");
+	printf("For he's a jolly good fellow!\n");
+	printf("For he's a jolly good fellow!\n");
+}
+void deny()
+{
+	printf("Which nobody can deny!\n");
+}
+
+int main()
+{
+	//1
+	printf("Gustav Mahler\n");
+	printf("Gustav\nMahler\n");
+	printf("Gustav ");
+	printf("Mahler\n");
+
+	//2
+	int age = 22;
+	char a[] = "Meng";
+	printf("age=%d,name=%s\n", age,a);
+
+	//3
+	int year = 356;
+	int i = age * year;
+	printf("age=%d,days=%d\n", age, i);
+
+	//4
+	jolly();
+	deny();
+	return 0;
+}
